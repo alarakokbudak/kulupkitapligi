@@ -22,10 +22,12 @@ const KITAPLAR = [
 ];
 
 function App() {
-  // Arama metnini localStorage'dan direkt al
-  const [aramaMetni, setAramaMetni] = useState(
-    () => localStorage.getItem('kulupKitapligi_arama') || ''
-  );
+  // DEBUG: Arama metnini konsola yaz
+  const [aramaMetni, setAramaMetni] = useState(() => {
+    const kayitliArama = localStorage.getItem('kulupKitapligi_arama');
+    console.log('🔍 INIT - LocalStorage arama:', kayitliArama);
+    return kayitliArama || '';
+  });
   
   const [kategori, setKategori] = useState('Tümü');
   const [favoriler, setFavoriler] = useState([]);
@@ -34,11 +36,13 @@ function App() {
   // Sadece favorileri localStorage'dan yükle
   useEffect(() => {
     const kayitliFavoriler = localStorage.getItem('kulupKitapligi_favoriler');
+    console.log('⭐ INIT - LocalStorage favoriler:', kayitliFavoriler);
     if (kayitliFavoriler) setFavoriler(JSON.parse(kayitliFavoriler));
   }, []);
 
   // Arama metni değişince hemen localStorage'a kaydet
   useEffect(() => {
+    console.log('💾 SAVING - Arama kaydediliyor:', aramaMetni);
     localStorage.setItem('kulupKitapligi_arama', aramaMetni);
   }, [aramaMetni]);
 
@@ -80,6 +84,8 @@ function App() {
 
   // Kategorileri getir
   const kategoriler = ['Tümü', ...new Set(KITAPLAR.map(kitap => kitap.kategori))];
+
+  console.log('🔄 RENDER - Arama metni:', aramaMetni);
 
   return (
     <div className="vintage-app">
