@@ -2,18 +2,18 @@
 
 Okul kulübü için vintage tarzında tasarlanmış web kütüphane uygulaması.
 
-## 🎯 Özellikler
+## Özellikler
 
 - Kitap arama ve filtreleme
 - Favorilere ekleme/çıkarma  
 - Kategoriye göre filtreleme
 - Yerel depolama (localStorage)
 
-## 🚀 Canlı Demo
+## Web Sitesi
 
-**[Canlı Siteyi Görüntüle](https://kulupkitapligi-51on.vercel.app/)**
+**[Web Sitesini Görüntüle](https://kulupkitapligi-51on.vercel.app/)**
 
-## 🛠️ Kurulum
+##  Kurulum
 
 ```bash
 git clone https://github.com/alarakokbudak/kulupkitapligi.git
