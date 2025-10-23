@@ -29,29 +29,34 @@ function App() {
 
   // LocalStorage'dan verileri yükle
   useEffect(() => {
-    const kayitliArama = localStorage.getItem('vintageKutuphane_arama');
-    const kayitliFavoriler = localStorage.getItem('vintageKutuphane_favoriler');
+    const kayitliArama = localStorage.getItem('kulupKitapligi_arama');
+    const kayitliFavoriler = localStorage.getItem('kulupKitapligi_favoriler');
+    const kayitliKategori = localStorage.getItem('kulupKitapligi_kategori');
     
     if (kayitliArama) setAramaMetni(kayitliArama);
     if (kayitliFavoriler) setFavoriler(JSON.parse(kayitliFavoriler));
+    if (kayitliKategori) setKategori(kayitliKategori);
   }, []);
 
   // LocalStorage'a verileri kaydet
   useEffect(() => {
-    localStorage.setItem('vintageKutuphane_arama', aramaMetni);
-    localStorage.setItem('vintageKutuphane_favoriler', JSON.stringify(favoriler));
-  }, [aramaMetni, favoriler]);
+    localStorage.setItem('kulupKitapligi_arama', aramaMetni);
+    localStorage.setItem('kulupKitapligi_favoriler', JSON.stringify(favoriler));
+    localStorage.setItem('kulupKitapligi_kategori', kategori);
+  }, [aramaMetni, favoriler, kategori]);
 
   // Kitapları filtrele
   useEffect(() => {
     let filtrelenmis = KITAPLAR;
 
+    // Arama metnine göre filtrele
     if (aramaMetni) {
       filtrelenmis = filtrelenmis.filter(kitap =>
         kitap.baslik.toLowerCase().includes(aramaMetni.toLowerCase())
       );
     }
 
+    // Kategoriye göre filtrele
     if (kategori !== 'Tümü') {
       filtrelenmis = filtrelenmis.filter(kitap => kitap.kategori === kategori);
     }
@@ -79,11 +84,13 @@ function App() {
   return (
     <div className="vintage-app">
       <div className="container">
+        {/* Header */}
         <header className="vintage-header">
           <h1 className="vintage-title">Kulüp Kitaplığı</h1>
           <p className="vintage-subtitle">Kitap Dostları Kulübü Koleksiyonu</p>
         </header>
 
+        {/* Kontroller */}
         <section className="controls-section">
           <div className="controls-grid">
             <AramaCubugu 
@@ -98,7 +105,9 @@ function App() {
           </div>
         </section>
 
+        {/* Ana İçerik */}
         <div className="main-content">
+          {/* Kitap Listesi */}
           <section className="books-section">
             <div className="section-header">
               {filtrelenmisKitaplar.length > 0 
@@ -113,6 +122,7 @@ function App() {
             />
           </section>
 
+          {/* Favori Panel */}
           <FavoriPaneli favoriKitaplar={favoriKitaplar} />
         </div>
       </div>
